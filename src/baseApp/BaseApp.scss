@@ -1,0 +1,32 @@
+.ant-layout {
+	.ant-layout-header {
+		background-color: #fff;
+	}
+	
+	.ant-image {	
+		float: left;
+		height: 99%;
+		
+		img {
+			height: 100%;
+		}
+	}
+	
+	.ant-card {
+		margin-bottom: 20px;
+		
+		.ant-card-body {
+			.drop-down {
+				    margin-left: 10px;
+			}
+			
+			.report-btn {
+				float: right;
+			}
+		}
+	}
+	
+	.ant-table-body::-webkit-scrollbar {
+		display: none;
+	}
+}
