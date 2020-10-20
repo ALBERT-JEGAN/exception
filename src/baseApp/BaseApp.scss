@@ -14,6 +14,16 @@
 	
 	.ant-card {
 		margin-bottom: 20px;
+		width: 100%;
+		padding: 0 20px;
+		
+		.ant-card-head {
+			border-bottom: 0;
+			
+			.ant-card-head-wrapper {
+				text-align: center;
+			}
+		}
 		
 		.ant-card-body {
 			.drop-down {
@@ -26,7 +36,43 @@
 		}
 	}
 	
-	.ant-table-body::-webkit-scrollbar {
-		display: none;
+	.ant-table-title {
+		text-align: center;
+		background-color: #bfbfbf;
+		padding: 5px;
+	}
+	
+	thead.ant-table-thead tr {
+		th {
+			background-color: #778899;
+			
+			&.ant-table-column-has-sorters:hover {
+				background-color: #778899;
+			}
+		}
+	}
+	
+	.ant-table-body {
+		&::-webkit-scrollbar {
+			display: none;
+		}
+		
+		.ant-table-tbody {
+			cursor: pointer;
+			
+			& > tr:nth-child(2n) td {
+				background-color: #f5f5f5;
+			}
+		}
+	}
+	
+	.ant-table-filter-trigger-container:hover {
+		background-color: #778899;
+	}
+	
+	.ant-table-footer {
+		text-align: center;
+		font-weight: bold;
+		color: #d9363e;
 	}
 }

@@ -68,20 +68,24 @@ let columns = [
   }
 ];
 	
-export class ExceptionContainer extends Component {
+export class EngageContainer extends Component {
 
-	constructor (props) {
+	constructor(props) {
 		super(props)
 
 		this.state = {
 			exceptionsList: [],
 			defaultListCount: 6,
 			listCount: 0,
-			loading: false
+			loading: false,
+			selectedRowKeys: []
 		}
 		
 		this.worker = new WebWorker(worker);
 		this.onScroll = this.onScroll.bind(this);
+		this.onSelectedRowKeysChange = this.onSelectedRowKeysChange.bind(this);
+		this.selectRow = this.selectRow.bind(this);
+		this.clearSelectedRows = this.clearSelectedRows.bind(this);
 	}
 
 	getExceptionInformation() {
@@ -116,20 +120,49 @@ export class ExceptionContainer extends Component {
 			});
 		});
 	}
+	
+	selectRow(record) {
+		const selectedRowKeys = [...this.state.selectedRowKeys];
+		selectedRowKeys.indexOf(record.key) >= 0 && (selectedRowKeys.splice(selectedRowKeys.indexOf(record.key), 1)) || (selectedRowKeys.push(record.key));
+		
+		this.setState({selectedRowKeys});
+	}
+	
+	onSelectedRowKeysChange(selectedRowKeys) {
+		this.setState({selectedRowKeys});
+	}
+	
+	clearSelectedRows() {
+		this.setState({selectedRowKeys: []});
+	}
 
 	render() {
-		let { exceptionsList, loading } = this.state;
+		let { exceptionsList, loading, selectedRowKeys } = this.state,
+		rowSelection = {
+			selectedRowKeys,
+			onChange: this.onSelectedRowKeysChange,
+			type:'checkbox',
+			columnWidth: 0, // Set the width to 0
+			renderCell: () => "", // Render nothing inside
+		};
 		
 		return (
 			<Table 
-				className="table" 
+				className="exception-table" 
 				loading={loading} 
 				columns={columns} 
 				dataSource={exceptionsList} 
 				pagination={false} 
 				scroll={{y:270, scrollToFirstRowOnChange: false }}
 				onChange = {this.onChange}
+				title={() => <span>GUESTS</span>}
 				footer={() => <span>Scroll to get more records</span>}
+				rowSelection={rowSelection}
+				onRow={(record) => ({
+					onClick: () => {
+						this.selectRow(record);
+					}
+				})}
 			/>
 		);
 	}
